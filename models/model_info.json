@@ -1,0 +1,6 @@
+{
+  "model_name": "appearance_lstm_clean_v2",
+  "input_shape": [30, 2048],
+  "threshold": 0.39,
+  "labels": ["REAL", "AI"]
+}
