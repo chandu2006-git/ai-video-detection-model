@@ -14,8 +14,17 @@ def predict_video(video_path):
     else:
         label = "UNCERTAIN"
 
+    ai_prob = round(prob * 100, 2)
+    real_prob = round((1 - prob) * 100, 2)
+
+    confidence = max(
+        ai_prob,
+        real_prob
+    )
+
     return {
         "label": label,
-        "ai_probability": round(prob * 100, 2)
+        "ai_probability": ai_prob,
+        "real_probability": real_prob,
+        "confidence": confidence
     }
-

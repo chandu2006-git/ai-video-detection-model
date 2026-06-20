@@ -1,4 +1,8 @@
-streamlit
-tensorflow==2.13.0
-opencv-python
+tensorflow==2.20.0
 numpy
+opencv-python-headless
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+pillow

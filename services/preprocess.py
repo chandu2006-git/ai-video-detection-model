@@ -17,8 +17,8 @@ def get_resnet():
         )
         _base_cnn.trainable = False
     return _base_cnn
-
 def extract_frames(video_path):
+
     cap = cv2.VideoCapture(video_path)
     frames = []
 
@@ -26,16 +26,31 @@ def extract_frames(video_path):
     step = max(total // SEQ_LEN, 1)
 
     i = 0
+
     while len(frames) < SEQ_LEN:
+
         cap.set(cv2.CAP_PROP_POS_FRAMES, i)
+
         ret, frame = cap.read()
+
         if not ret:
             break
-        frame = cv2.resize(frame, (IMG_SIZE, IMG_SIZE))
+
+        frame = cv2.resize(
+            frame,
+            (IMG_SIZE, IMG_SIZE)
+        )
+
         frames.append(frame)
+
         i += step
 
     cap.release()
+
+    if len(frames) == 0:
+        raise ValueError(
+            "No frames could be extracted from the video."
+        )
 
     while len(frames) < SEQ_LEN:
         frames.append(frames[-1])

@@ -2,5 +2,10 @@
   "model_name": "appearance_lstm_clean_v2",
   "input_shape": [30, 2048],
   "threshold": 0.39,
-  "labels": ["REAL", "AI"]
+  "labels": ["REAL", "AI"],
+  "tensorflow":"2.20.0",
+  "python":"3.11",
+  "frames":30,
+  "image_size":224,
+  "architecture":"ResNet50 + LSTM"
 }
