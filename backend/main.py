@@ -154,3 +154,14 @@ async def index():
     return FileResponse(
         "frontend/index.html"
     )
+
+@app.get("/test-lstm")
+def test_lstm():
+
+    from services.model_loader import load_model_once
+
+    load_model_once()
+
+    return {
+        "status": "lstm_loaded"
+    }
