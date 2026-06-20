@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi import UploadFile
 from fastapi import File
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from services.predictor import predict_video
 
 import tempfile
@@ -40,3 +41,20 @@ async def predict(
     )
 
     return result
+@app.get("/")
+def home():
+    return {
+        "status":"online",
+        "model":"CNN-LSTM",
+        "version":"2.0"
+    }
+app.mount(
+    "/frontend",
+    StaticFiles(directory="frontend"),
+    name="frontend"
+)
+@app.get("/")
+async def index():
+    return FileResponse(
+        "frontend/index.html"
+    )
