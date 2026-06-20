@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+import os
 
 IMG_SIZE = 224
 SEQ_LEN = 30
@@ -10,11 +11,27 @@ _base_cnn = None
 def get_resnet():
     global _base_cnn
     if _base_cnn is None:
+        BASE_DIR = os.path.dirname(
+            os.path.dirname(
+                os.path.abspath(__file__)
+            )
+        )
+
+        RESNET_PATH = os.path.join(
+            BASE_DIR,
+            "models",
+            "resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
+        )
+        print("ResNet Path:", RESNET_PATH)
+        print("Exists:", os.path.exists(RESNET_PATH))
+        print("Loading ResNet50...")
         _base_cnn = ResNet50(
-            weights="imagenet",
+            weights=RESNET_PATH,
             include_top=False,
             pooling="avg"
         )
+        print("ResNet50 Loaded")
+        
         _base_cnn.trainable = False
     return _base_cnn
 def extract_frames(video_path):
