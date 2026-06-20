@@ -3,10 +3,11 @@ from services.preprocess import extract_features
 
 def predict_video(video_path):
     model, info = load_model_once()
-
+    print("predict_video() entered")
     X = extract_features(video_path)
     prob = float(model.predict(X)[0][0])
-
+    print("Features extracted") 
+    print("Running CNN-LSTM...")  
     if prob < 0.45:
         label = "REAL VIDEO"
     elif prob > 0.60:
@@ -21,7 +22,7 @@ def predict_video(video_path):
         ai_prob,
         real_prob
     )
-
+    print("Prediction finished")
     return {
         "label": label,
         "ai_probability": ai_prob,
