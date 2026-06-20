@@ -80,16 +80,14 @@ def test_model():
 # PREDICTION
 # ---------------------------------
 
+
 @app.post("/predict")
 async def predict(
     video: UploadFile = File(...)
 ):
-
     temp_path = None
 
     try:
-
-        print("========== PREDICT START ==========")
 
         with tempfile.NamedTemporaryFile(
             delete=False,
@@ -103,16 +101,14 @@ async def predict(
 
             temp_path = tmp.name
 
+        print("========== PREDICT START ==========")
         print("Video Saved:", temp_path)
-
-        print("Calling predict_video...")
 
         result = predict_video(
             temp_path
         )
 
-        print("Prediction Complete")
-        print(result)
+        print("========== PREDICT SUCCESS ==========")
 
         return result
 
@@ -129,14 +125,8 @@ async def predict(
     finally:
 
         if temp_path and os.path.exists(temp_path):
-
-            try:
-                os.remove(temp_path)
-                print("Temporary file removed")
-
-            except Exception:
-                pass
-
+            os.remove(temp_path)
+            print("Temporary file removed")
 
 # ---------------------------------
 # FRONTEND
@@ -164,4 +154,9 @@ def test_lstm():
 
     return {
         "status": "lstm_loaded"
+    }
+@app.get("/ping")
+def ping():
+    return {
+        "status": "working"
     }
