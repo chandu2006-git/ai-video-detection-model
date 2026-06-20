@@ -34,46 +34,38 @@ def get_resnet():
         
         _base_cnn.trainable = False
     return _base_cnn
-def extract_frames(video_path):
+def extract_features(video_path):
 
-    cap = cv2.VideoCapture(video_path)
-    frames = []
+    print("FEATURE EXTRACTION START")
 
-    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    step = max(total // SEQ_LEN, 1)
+    frames = extract_frames(video_path)
 
-    i = 0
+    print("Frames Shape:", frames.shape)
 
-    while len(frames) < SEQ_LEN:
+    frames = preprocess_input(
+        frames.astype(np.float32)
+    )
 
-        cap.set(cv2.CAP_PROP_POS_FRAMES, i)
+    print("Loading ResNet")
 
-        ret, frame = cap.read()
+    cnn = get_resnet()
 
-        if not ret:
-            break
+    print("Running ResNet50")
 
-        frame = cv2.resize(
-            frame,
-            (IMG_SIZE, IMG_SIZE)
-        )
+    feats = cnn.predict(
+        frames,
+        verbose=0
+    )
 
-        frames.append(frame)
+    print("ResNet50 Complete")
 
-        i += step
+    print("Features Shape:", feats.shape)
 
-    cap.release()
-
-    if len(frames) == 0:
-        raise ValueError(
-            "No frames could be extracted from the video."
-        )
-
-    while len(frames) < SEQ_LEN:
-        frames.append(frames[-1])
-
-    return np.array(frames)
-
+    return feats.reshape(
+        1,
+        SEQ_LEN,
+        -1
+    )
 def extract_features(video_path):
     frames = extract_frames(video_path)
     frames = preprocess_input(frames.astype(np.float32))
