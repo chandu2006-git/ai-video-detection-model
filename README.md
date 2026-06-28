@@ -3,10 +3,7 @@
 ###  Live Demo
 ** https://ai-video-detection-model-7uwcszkr5zetudqpyh5hzv.streamlit.app/**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://ai-video-detection-model-7uwcszkr5zetudqpyh5hzv.streamlit.app/)
-[![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)]
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.20-orange?style=for-the-badge&logo=tensorflow)]
-[![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-red?style=for-the-badge&logo=streamlit)
+
 ---
 
 ## Dashboard
